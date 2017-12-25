@@ -3,6 +3,7 @@ package com.ruolan.o2o.entity;
 import java.util.Date;
 
 public class WechatAuth {
+
 	private Long wechatAuthId;
 	private Long userId;
 	private String openId;
