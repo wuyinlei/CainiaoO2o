@@ -23,6 +23,7 @@ public class Shop {
 
 	private List<ShopAuthMap> staffList;
 	private Area area;
+	private PersonInfo owner;
 	private ShopCategory shopCategory;
 	private ShopCategory parentCategory;
 
@@ -182,4 +183,11 @@ public class Shop {
 		this.parentCategory = parentCategory;
 	}
 
+	public void setOwner(PersonInfo owner) {
+		this.owner = owner;
+	}
+
+	public PersonInfo getOwner() {
+		return owner;
+	}
 }
