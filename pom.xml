@@ -114,7 +114,7 @@
 			<artifactId>spring-webmvc</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
-		<!-- 4)Spring test -->
+		<!-- 4)Spring dao -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>
@@ -194,7 +194,7 @@
 	</dependencies>
  
    <build>
-		<finalName>myo2o</finalName>
+		<finalName>o2o</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

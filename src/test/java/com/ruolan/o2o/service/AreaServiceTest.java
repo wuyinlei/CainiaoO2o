@@ -1,27 +1,25 @@
-package com.ruolan.o2o.test;
+package com.ruolan.o2o.service;
 
 import com.ruolan.o2o.BaseTest;
-import com.ruolan.o2o.dao.AreaDao;
 import com.ruolan.o2o.entity.Area;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
-public class AreaDaoTest extends BaseTest{
+public class AreaServiceTest extends BaseTest {
 
     @Autowired
-    private AreaDao areaDao;
+    private AreaService areaService;
 
     @Test
-    public void testQueryArea(){
-        List<Area> areaList = areaDao.queryArea();
+    public void testAreaService(){
+
+        List<Area> areaList = areaService.getAreaList();
         for (Area area : areaList) {
             System.out.println(area.getAreaDesc());
         }
 
     }
-
-
 
 }

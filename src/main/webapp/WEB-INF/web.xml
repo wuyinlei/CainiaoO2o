@@ -3,14 +3,14 @@
                       http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
 	version="3.1" metadata-complete="true">
 	
-  <display-name>Archetype Created Web Application</display-name>
+  <display-name>o2o</display-name>
 
   <welcome-file-list>
     <welcome-file>index.jsp</welcome-file>
   </welcome-file-list>
   
   <servlet>
-  	<servlet-name>spring-dispatcher</servlet-name>
+  	<servlet-name>o2o</servlet-name>
   	<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
   	<init-param>
   		<param-name>contextConfigLocation</param-name>
@@ -19,7 +19,7 @@
   </servlet>
   
   <servlet-mapping>
-  	<servlet-name>spring-dispatcher</servlet-name>
+  	<servlet-name>o2o</servlet-name>
   	<!-- 默认匹配所有的请求 -->
   	<url-pattern>/</url-pattern>
   </servlet-mapping>
