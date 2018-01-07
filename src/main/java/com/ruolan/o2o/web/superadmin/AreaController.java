@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,19 +20,19 @@ public class AreaController {
     @Autowired
     private AreaService areaService;
 
-    @RequestMapping(value = "/listarea",method = RequestMethod.GET)
+    @RequestMapping(value = "/listarea", method = RequestMethod.GET)
     @ResponseBody
-    private Map<String,Object> listArea (){
+    private Map<String, Object> listArea() {
 
-        Map<String ,Object> modelMap = new HashMap<>();
-        List<Area> list = new ArrayList<>();
+        Map<String, Object> modelMap = new HashMap<>();
+
         try {
-            list = areaService.getAreaList();
-            modelMap.put("rows",list);
-            modelMap.put("total",list.size());
-        } catch (Exception e){
-            modelMap.put("success",false);
-            modelMap.put("errMsg",e.getMessage().toString());
+            List<Area> list = areaService.getAreaList();
+            modelMap.put("rows", list);
+            modelMap.put("total", list.size());
+        } catch (Exception e) {
+            modelMap.put("success", false);
+            modelMap.put("errMsg", e.getMessage().toString());
         }
 
         return modelMap;
