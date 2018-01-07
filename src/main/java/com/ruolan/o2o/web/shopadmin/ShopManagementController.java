@@ -2,10 +2,13 @@ package com.ruolan.o2o.web.shopadmin;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ruolan.o2o.dto.ShopExecution;
+import com.ruolan.o2o.entity.Area;
 import com.ruolan.o2o.entity.PersonInfo;
 import com.ruolan.o2o.entity.Shop;
+import com.ruolan.o2o.entity.ShopCategory;
 import com.ruolan.o2o.enums.ShopStateEnum;
 import com.ruolan.o2o.service.AreaService;
+import com.ruolan.o2o.service.ShopCategoryService;
 import com.ruolan.o2o.service.ShopService;
 import com.ruolan.o2o.utils.CodeUtil;
 import com.ruolan.o2o.utils.HttpServletRequestUtil;
@@ -25,23 +28,48 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-@RequestMapping(value = "shopadmin")
+@RequestMapping(value = "/shopadmin")
 public class ShopManagementController {
 
     @Autowired
     private ShopService shopService;
-//    @Autowired
-//    private ShopCategoryService shopCategoryService;
+
+    @Autowired
+    private ShopCategoryService shopCategoryService;
+
     @Autowired
     private AreaService areaService;
 //    @Autowired
 //    private LocalAuthService localAuthService;
 
 
+    @RequestMapping(value = "/getshopinitinfo", method = RequestMethod.GET)
+    @ResponseBody
+    private Map<String, Object> getShopInitInfo() {
+        Map<String, Object> modelMap = new HashMap<>();
+        List<ShopCategory> shopCategoryList;
+        List<Area> areaList;
+        try {
+            //获取到全部的商店列表
+            shopCategoryList = shopCategoryService.getShopCategoryList(new ShopCategory());
+            //获取到所有的区域信息
+            areaList = areaService.getAreaList();
+            modelMap.put("shopCategoryList",shopCategoryList);
+            modelMap.put("areaList",areaList);
+            modelMap.put("success", true);
+        }catch (Exception e){
+            modelMap.put("success", false);
+            modelMap.put("errMsg", e.getMessage());
+        }
+
+        return modelMap;
+    }
+
+
     @RequestMapping(value = "/registershop", method = RequestMethod.POST)
     @ResponseBody
     private Map<String, Object> registerShop(HttpServletRequest request) {
-        Map<String, Object> modelMap = new HashMap<String, Object>();
+        Map<String, Object> modelMap = new HashMap<>();
         if (!CodeUtil.checkVerifyCode(request)) {
             modelMap.put("success", false);
             modelMap.put("errMsg", "输入了错误的验证码");
@@ -65,6 +93,7 @@ public class ShopManagementController {
         }
         try {
             shop = mapper.readValue(shopStr, Shop.class);
+//            shop = mapper.
         } catch (Exception e) {
             modelMap.put("success", false);
             modelMap.put("errMsg", e.toString());

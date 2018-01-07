@@ -32,4 +32,20 @@
         priority DESC
     </select>
 
+    <select id="queryShopCategoryById" resultType="com.ruolan.o2o.entity.ShopCategory">
+        SELECT
+        shop_category_id,
+        shop_category_name,
+        shop_category_desc,
+        shop_category_img,
+        priority,
+        create_time,
+        last_edit_time,
+        parent_id
+        FROM
+        tb_shop_category
+        WHERE
+        shop_category_id=#{shopCategoryId}
+    </select>
+
 </mapper>

@@ -1,25 +1,29 @@
 package com.ruolan.o2o.service.impl;
 
+import com.ruolan.o2o.dao.ShopCategoryDao;
 import com.ruolan.o2o.dao.ShopDao;
 import com.ruolan.o2o.dto.ShopExecution;
 import com.ruolan.o2o.entity.Shop;
+import com.ruolan.o2o.entity.ShopCategory;
 import com.ruolan.o2o.enums.ShopStateEnum;
 import com.ruolan.o2o.service.ShopService;
 import com.ruolan.o2o.utils.FileUtil;
 import com.ruolan.o2o.utils.ImageUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import java.util.Date;
 
+@Service
 public class ShopServiceImpl implements ShopService {
 
     @Autowired
     private ShopDao shopDao;
 
-//    @Autowired
-//    private ShopCategoryDao shopCategoryDao;
+    @Autowired
+    private ShopCategoryDao shopCategoryDao;
 
     /**
      * 使用注解控制事务方法的优点： 1.开发团队达成一致约定，明确标注事务方法的编程风格
@@ -38,15 +42,14 @@ public class ShopServiceImpl implements ShopService {
             shop.setEnableStatus(0);
             shop.setCreateTime(new Date());
             shop.setLastEditTime(new Date());
-//            if (shop.getShopCategory() != null) {
-//                Long shopCategoryId = shop.getShopCategory()
-//                        .getShopCategoryId();
-//                ShopCategory sc = new ShopCategory();
-//                sc = shopCategoryDao.queryShopCategoryById(shopCategoryId);
-//                ShopCategory parentCategory = new ShopCategory();
-//                parentCategory.setShopCategoryId(sc.getParentId());
-//                shop.setParentCategory(parentCategory);
-//            }
+            if (shop.getShopCategory() != null) {
+                Long shopCategoryId = shop.getShopCategory()
+                        .getShopCategoryId();
+                ShopCategory sc = shopCategoryDao.queryShopCategoryById(shopCategoryId);
+                ShopCategory parentCategory = new ShopCategory();
+                parentCategory.setShopCategoryId(sc.getParentId());
+                shop.setParentCategory(parentCategory);
+            }
             int effectedNum = shopDao.insertShop(shop);
             if (effectedNum <= 0) {
                 throw new RuntimeException("店铺创建失败");
