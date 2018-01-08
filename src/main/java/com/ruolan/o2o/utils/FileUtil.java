@@ -18,7 +18,8 @@ public class FileUtil {
         if (os.toLowerCase().startsWith("win")) {
             basePath = "D:/projectdev/image/";
         } else {
-            basePath = "/home/xiangzepro/";
+            //这个地方是个坑
+            basePath = "/Users/wuyinlei/images";
         }
         basePath = basePath.replace("/", seperator);
         return basePath;

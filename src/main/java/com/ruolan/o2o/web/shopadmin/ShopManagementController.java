@@ -101,9 +101,12 @@ public class ShopManagementController {
         }
         if (shop != null && shopImg != null) {
             try {
-                PersonInfo user = (PersonInfo) request.getSession()
-                        .getAttribute("user");
-                shop.setOwnerId(user.getUserId());
+                PersonInfo user = new PersonInfo();
+                user.setUserId(9L);
+                shop.setOwner(user); shop.setOwnerId(user.getUserId());
+//                PersonInfo user = (PersonInfo) request.getSession()
+//                        .getAttribute("user");
+//                shop.setOwnerId(user.getUserId());
                 ShopExecution se = shopService.addShop(shop, shopImg);
                 if (se.getState() == ShopStateEnum.CHECK.getState()) {
                     modelMap.put("success", true);
