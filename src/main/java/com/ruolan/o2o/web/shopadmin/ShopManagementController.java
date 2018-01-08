@@ -137,10 +137,10 @@ public class ShopManagementController {
     }
 
 
-    @RequestMapping(value = "shopoperation", method = RequestMethod.GET)
-    private String register() {
-        return "shop/shopedit";
-    }
+//    @RequestMapping(value = "shopoperation", method = RequestMethod.GET)
+//    private String register() {
+//        return "shop/shopedit";
+//    }
 
 
 }
