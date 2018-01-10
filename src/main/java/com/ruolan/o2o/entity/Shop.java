@@ -8,6 +8,7 @@ public class Shop {
 	private Long shopId;
 	private Long ownerId;
 	private Long shopCategoryId;
+	private Long parentCategoryId;
 	private String shopName;
 	private String shopDesc;
 	private String shopAddr;
@@ -21,11 +22,11 @@ public class Shop {
 	private Integer enableStatus;
 	private String advice;
 
-	private List<ShopAuthMap> staffList;
+
+//	private List<ShopAuthMap> staffList;
 	private Area area;
 	private PersonInfo owner;
 	private ShopCategory shopCategory;
-	private ShopCategory parentCategory;
 
 	public Long getShopId() {
 		return shopId;
@@ -49,6 +50,14 @@ public class Shop {
 
 	public void setShopCategoryId(Long shopCategoryId) {
 		this.shopCategoryId = shopCategoryId;
+	}
+
+	public Long getParentCategoryId() {
+		return parentCategoryId;
+	}
+
+	public void setParentCategoryId(Long parentCategoryId) {
+		this.parentCategoryId = parentCategoryId;
 	}
 
 	public String getShopName() {
@@ -138,14 +147,14 @@ public class Shop {
 	public void setEnableStatus(Integer enableStatus) {
 		this.enableStatus = enableStatus;
 	}
-
-	public List<ShopAuthMap> getStaffList() {
-		return staffList;
-	}
-
-	public void setStaffList(List<ShopAuthMap> staffList) {
-		this.staffList = staffList;
-	}
+//
+//	public List<ShopAuthMap> getStaffList() {
+//		return staffList;
+//	}
+//
+//	public void setStaffList(List<ShopAuthMap> staffList) {
+//		this.staffList = staffList;
+//	}
 
 	public Area getArea() {
 		return area;
@@ -175,13 +184,13 @@ public class Shop {
 		return "[shopId=" + shopId + ", shopName=" + shopName + "]";
 	}
 
-	public ShopCategory getParentCategory() {
-		return parentCategory;
-	}
-
-	public void setParentCategory(ShopCategory parentCategory) {
-		this.parentCategory = parentCategory;
-	}
+//	public ShopCategory getParentCategory() {
+//		return parentCategory;
+//	}
+//
+//	public void setParentCategory(ShopCategory parentCategory) {
+//		this.parentCategory = parentCategory;
+//	}
 
 	public void setOwner(PersonInfo owner) {
 		this.owner = owner;

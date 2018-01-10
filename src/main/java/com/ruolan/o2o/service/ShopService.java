@@ -9,4 +9,14 @@ public interface ShopService {
 
     ShopExecution addShop(Shop shop, CommonsMultipartFile shopImg);
 
+    /**
+     * 查询指定店铺信息
+     *
+     * @param shopId
+     *            shopId
+     * @return Shop shop
+     */
+    Shop getByShopId(long shopId);
+
+
 }

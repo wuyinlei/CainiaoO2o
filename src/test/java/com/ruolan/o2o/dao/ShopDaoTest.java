@@ -5,6 +5,7 @@ import com.ruolan.o2o.entity.Area;
 import com.ruolan.o2o.entity.PersonInfo;
 import com.ruolan.o2o.entity.Shop;
 import com.ruolan.o2o.entity.ShopCategory;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -18,6 +19,13 @@ public class ShopDaoTest extends BaseTest {
     ShopDao shopDao;
 
     @Test
+    public void testQueryShopById(){
+        Shop shop = shopDao.queryByShopId(15L);
+        System.out.println(shop.getShopId());
+    }
+
+    @Test
+    @Ignore
     public void testInsertShop(){
         Shop shop = new Shop();
         PersonInfo owner = new PersonInfo();
@@ -45,6 +53,7 @@ public class ShopDaoTest extends BaseTest {
     }
 
     @Test
+    @Ignore
     public void  updateShop(){
         Shop shop = new Shop();
         shop.setShopId(16L);

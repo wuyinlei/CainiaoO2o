@@ -48,7 +48,7 @@ public class ShopServiceImpl implements ShopService {
                 ShopCategory sc = shopCategoryDao.queryShopCategoryById(shopCategoryId);
                 ShopCategory parentCategory = new ShopCategory();
                 parentCategory.setShopCategoryId(sc.getParentId());
-                shop.setParentCategory(parentCategory);
+//                shop.setParentCategory(parentCategory);
             }
             int effectedNum = shopDao.insertShop(shop);
             if (effectedNum <= 0) {
@@ -76,6 +76,11 @@ public class ShopServiceImpl implements ShopService {
         }
 
         return new ShopExecution(ShopStateEnum.CHECK,shop);
+    }
+
+    @Override
+    public Shop getByShopId(long shopId) {
+        return shopDao.queryByShopId(shopId);
     }
 
     /**
