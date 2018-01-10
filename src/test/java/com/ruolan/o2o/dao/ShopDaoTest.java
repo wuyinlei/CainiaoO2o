@@ -19,10 +19,13 @@ public class ShopDaoTest extends BaseTest {
     ShopDao shopDao;
 
     @Test
+    @Ignore
     public void testQueryShopById(){
         Shop shop = shopDao.queryByShopId(15L);
         System.out.println(shop.getShopId());
     }
+
+
 
     @Test
     @Ignore

@@ -83,6 +83,37 @@ public class ShopServiceImpl implements ShopService {
         return shopDao.queryByShopId(shopId);
     }
 
+    @Transactional
+    @Override
+    public ShopExecution modifyShop(Shop shop, CommonsMultipartFile shopImg) throws RuntimeException {
+
+        if (shop == null || shop.getShopId() == null) {
+            return new ShopExecution(ShopStateEnum.NULL_SHOP_ID);
+        } else {
+            try {
+                if (shopImg != null) {
+                    Shop tempShop = shopDao.queryByShopId(shop.getShopId());
+                    if (tempShop.getShopImg() != null) {
+                        FileUtil.deleteFile(tempShop.getShopImg());
+                    }
+                    addShopImg(shop, shopImg);
+                }
+                shop.setLastEditTime(new Date());
+                int effectedNum = shopDao.updateShop(shop);
+                if (effectedNum <= 0) {
+                    return new ShopExecution(ShopStateEnum.INNER_ERROR);
+                } else {// 创建成功
+                    shop = shopDao.queryByShopId(shop.getShopId());
+                    return new ShopExecution(ShopStateEnum.SUCCESS, shop);
+                }
+
+            }catch (Exception e){
+                throw new RuntimeException("modifyShop error: "
+                        + e.getMessage());
+            }
+        }
+    }
+
     /**
      * 添加图片地址
      *

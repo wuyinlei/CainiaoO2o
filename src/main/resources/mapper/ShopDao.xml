@@ -25,9 +25,9 @@
             <id column="area_id" property="areaId" jdbcType="INTEGER" />
             <result column="area_name" property="areaName" jdbcType="VARCHAR"/>
             <result column="area_desc" property="areaDesc" jdbcType="VARCHAR"/>
-            <result column="priority" property="priority" jdbcType="INTEGER" />
-            <result column="create_time" property="createTime" jdbcType="DATE" />
-            <result column="last_edit_time" property="lastEditTime" jdbcType="DATE"/>
+            <result column="priority_area" property="priority" jdbcType="INTEGER" />
+            <result column="create_time_area" property="createTime" jdbcType="DATE" />
+            <result column="last_edit_time_area" property="lastEditTime" jdbcType="DATE"/>
         </association>
         <association property="shopCategory" column="shop_category_id"
                                    javaType="com.ruolan.o2o.entity.ShopCategory" jdbcType="INTEGER" >
@@ -35,9 +35,9 @@
         <result column="shop_category_name" property="shopCategoryName" jdbcType="VARCHAR"/>
         <result column="shop_category_desc" property="shopCategoryDesc" jdbcType="VARCHAR"/>
         <result column="shop_category_img" property="shopCategoryImg" jdbcType="VARCHAR"/>
-        <result column="priority" property="priority" jdbcType="INTEGER"/>
-        <result column="create_time" property="createTime" jdbcType="DATE"/>
-        <result column="last_edit_time" property="lastEditTime" jdbcType="DATE"/>
+        <result column="priority_pm" property="priority" jdbcType="INTEGER"/>
+        <result column="create_time_sp" property="createTime" jdbcType="DATE"/>
+        <result column="last_edit_time_sp" property="lastEditTime" jdbcType="DATE"/>
 
     </association>
 
@@ -54,8 +54,8 @@
             <result column="shop_owner_flag" property="shopOwnerFlag" jdbcType="INTEGER"/>
             <result column="admin_flag" property="adminFlag" jdbcType="INTEGER"/>
             <result column="enable_status" property="enableStatus" jdbcType="INTEGER"/>
-            <result column="create_time" property="createTime" jdbcType="DATE"/>
-            <result column="last_edit_time" property="lastEditTime" jdbcType="DATE"/>
+            <result column="create_time_owner" property="createTime" jdbcType="DATE"/>
+            <result column="last_edit_time_owner" property="lastEditTime" jdbcType="DATE"/>
         </association>
 
 
@@ -95,6 +95,8 @@
 
     <!--where s.shop_category_id = c.shop_category_id and s.shop_id =15-->
 
+    <!--如果有重名的字段 那么这个时候需要我们指定别名  要么就前面的id字段名会覆盖之后查询出来的字段名的值-->
+
     <select id="queryByShopId" resultMap="shopMap" parameterType="Long">
         <!-- 具体的sql -->
         SELECT
@@ -118,16 +120,16 @@
         tb_area.area_id,
         tb_area.area_name,
         tb_area.area_desc,
-        tb_area.priority,
-        tb_area.create_time,
-        tb_area.last_edit_time,
+        tb_area.priority as priority_area,
+        tb_area.create_time AS create_time_area,
+        tb_area.last_edit_time AS last_edit_time_area,
         tb_shop_category.shop_category_id,
         tb_shop_category.shop_category_name,
         tb_shop_category.shop_category_desc,
         tb_shop_category.shop_category_img,
-        tb_shop_category.priority,
-        tb_shop_category.create_time,
-        tb_shop_category.last_edit_time,
+        tb_shop_category.priority AS priority_pm,
+        tb_shop_category.create_time AS create_time_sp,
+        tb_shop_category.last_edit_time as last_edit_time_sp,
         i.user_id,
         i.name,
         i.birthday,
@@ -139,12 +141,14 @@
         i.shop_owner_flag,
         i.admin_flag,
         i.enable_status,
-        i.last_edit_time,
-        i.create_time
+        i.last_edit_time AS last_edit_time_owner,
+        i.create_time AS create_time_owner
         FROM
         tb_shop ,tb_area,tb_shop_category,tb_person_info i
         WHERE
-        tb_shop.area_id = tb_area.area_id AND tb_shop.shop_category_id = tb_shop_category.shop_category_id
+        tb_shop.area_id = tb_area.area_id
+        AND tb_shop.shop_category_id = tb_shop_category.shop_category_id
+        AND tb_shop.owner_id = i.user_id
         AND
         shop_id = #{shopId}
     </select>

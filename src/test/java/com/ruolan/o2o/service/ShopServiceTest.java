@@ -5,6 +5,7 @@ import com.ruolan.o2o.entity.Area;
 import com.ruolan.o2o.entity.Shop;
 import com.ruolan.o2o.entity.ShopCategory;
 import com.ruolan.o2o.enums.ShopStateEnum;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -16,7 +17,10 @@ public class ShopServiceTest extends BaseTest {
     @Autowired
     ShopService shopService;
 
-    @Test
+
+
+	@Test
+	@Ignore
     public void testShopService(){
 
         Shop shop = new Shop();

@@ -19,4 +19,14 @@ public interface ShopService {
     Shop getByShopId(long shopId);
 
 
+    /**
+     * 更新店铺信息（从店家角度）
+     *
+     * @return
+     * @throws RuntimeException
+     */
+    ShopExecution modifyShop(Shop shop, CommonsMultipartFile shopImg) throws RuntimeException;
+
+
+
 }

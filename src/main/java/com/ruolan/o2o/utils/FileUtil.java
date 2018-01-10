@@ -60,6 +60,13 @@ public class FileUtil {
         return nowTimeStr + rannum;
     }
 
+    /**
+     * storePath 是文件的路径还是目录的录几个
+     * 如果是文件路径则删除该文件
+     * 如果是目录路径则删除该目录下的所有文件
+     *
+     * @param storePath
+     */
     public static void deleteFile(String storePath) {
         File file = new File(getImgBasePath() + storePath);
         if (file.exists()) {
