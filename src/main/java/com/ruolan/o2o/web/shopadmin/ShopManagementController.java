@@ -89,8 +89,8 @@ public class ShopManagementController {
         ObjectMapper mapper = new ObjectMapper();
         Shop shop = null;
         String shopStr = HttpServletRequestUtil.getString(request, "shopStr");
-        MultipartHttpServletRequest multipartRequest = null;
-        CommonsMultipartFile shopImg = null;
+        MultipartHttpServletRequest multipartRequest;
+        CommonsMultipartFile shopImg;
         CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(
                 request.getSession().getServletContext());
         if (multipartResolver.isMultipart(request)) {
@@ -171,7 +171,7 @@ public class ShopManagementController {
 
             modelMap.put("shop", shop);
             request.getSession().setAttribute("currentShop", "shop");
-            List<Area> areaList = new ArrayList<Area>();
+            List<Area> areaList = new ArrayList<>();
             try {
                 areaList = areaService.getAreaList();
             } catch (Exception e) {
