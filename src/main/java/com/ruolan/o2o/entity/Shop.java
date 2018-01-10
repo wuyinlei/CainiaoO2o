@@ -7,6 +7,7 @@ public class Shop {
 
 	private Long shopId;
 	private Long ownerId;
+	private Long areaId;
 	private Long shopCategoryId;
 	private Long parentCategoryId;
 	private String shopName;
@@ -27,6 +28,7 @@ public class Shop {
 	private Area area;
 	private PersonInfo owner;
 	private ShopCategory shopCategory;
+	private ShopCategory parentCategory;
 
 	public Long getShopId() {
 		return shopId;
@@ -86,6 +88,14 @@ public class Shop {
 
 	public String getPhone() {
 		return phone;
+	}
+
+	public Long getAreaId() {
+		return areaId;
+	}
+
+	public void setAreaId(Long areaId) {
+		this.areaId = areaId;
 	}
 
 	public void setPhone(String phone) {
@@ -184,13 +194,13 @@ public class Shop {
 		return "[shopId=" + shopId + ", shopName=" + shopName + "]";
 	}
 
-//	public ShopCategory getParentCategory() {
-//		return parentCategory;
-//	}
-//
-//	public void setParentCategory(ShopCategory parentCategory) {
-//		this.parentCategory = parentCategory;
-//	}
+	public ShopCategory getParentCategory() {
+		return parentCategory;
+	}
+
+	public void setParentCategory(ShopCategory parentCategory) {
+		this.parentCategory = parentCategory;
+	}
 
 	public void setOwner(PersonInfo owner) {
 		this.owner = owner;

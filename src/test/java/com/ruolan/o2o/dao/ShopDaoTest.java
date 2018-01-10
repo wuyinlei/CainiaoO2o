@@ -10,6 +10,7 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Date;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
@@ -80,6 +81,19 @@ public class ShopDaoTest extends BaseTest {
         shop.setAdvice("已经通过");
         int effectedNum = shopDao.updateShop(shop);
         assertEquals(1,effectedNum);
+    }
+
+    @Test
+    public void testBQueryShopList() throws Exception {
+        Shop shopCondition = new Shop();
+        PersonInfo info = new PersonInfo();
+        info.setUserId(8l);
+        List<Shop> shops = shopDao.queryShopList(shopCondition, 0, 5);
+
+        System.out.println("员工号为8的人的店铺大小 ： " + shops.size());
+
+        int count = shopDao.queryShopCount(shopCondition);
+        System.out.println("店铺的总数 ： " + count);
     }
 
 }

@@ -83,6 +83,11 @@ public class ShopServiceImpl implements ShopService {
         return shopDao.queryByShopId(shopId);
     }
 
+    @Override
+    public int queryShopCount(Shop shopCondition) {
+        return shopDao.queryShopCount(shopCondition);
+    }
+
     @Transactional
     @Override
     public ShopExecution modifyShop(Shop shop, CommonsMultipartFile shopImg) throws RuntimeException {
@@ -112,6 +117,15 @@ public class ShopServiceImpl implements ShopService {
                         + e.getMessage());
             }
         }
+    }
+
+    @Override
+    public ShopExecution getShopList(Shop shopCondition, int pageIndex, int pageSize) {
+        ShopExecution se = new ShopExecution();
+
+
+
+        return se;
     }
 
     /**
