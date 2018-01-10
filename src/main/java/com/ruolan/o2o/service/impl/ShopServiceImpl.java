@@ -9,12 +9,14 @@ import com.ruolan.o2o.enums.ShopStateEnum;
 import com.ruolan.o2o.service.ShopService;
 import com.ruolan.o2o.utils.FileUtil;
 import com.ruolan.o2o.utils.ImageUtil;
+import com.ruolan.o2o.utils.PageCalculator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class ShopServiceImpl implements ShopService {
@@ -121,9 +123,19 @@ public class ShopServiceImpl implements ShopService {
 
     @Override
     public ShopExecution getShopList(Shop shopCondition, int pageIndex, int pageSize) {
+
         ShopExecution se = new ShopExecution();
 
+        int rowIndex = PageCalculator.calculateRowIndex(pageIndex,pageSize);
+        List<Shop> shopList = shopDao.queryShopList(shopCondition,rowIndex,pageSize);
+        int count = shopDao.queryShopCount(shopCondition);
 
+        if (shopList != null){
+            se.setShopList(shopList);
+            se.setCount(count);
+        } else {
+            se.setState(ShopStateEnum.INNER_ERROR.getState());
+        }
 
         return se;
     }

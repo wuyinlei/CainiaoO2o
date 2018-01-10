@@ -19,6 +19,7 @@ public class ShopServiceTest extends BaseTest {
 
 
 
+
 	@Test
 	@Ignore
     public void testShopService(){

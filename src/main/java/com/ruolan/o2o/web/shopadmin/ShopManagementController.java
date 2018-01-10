@@ -45,6 +45,10 @@ public class ShopManagementController {
 //    private LocalAuthService localAuthService;
 
 
+    /**
+     * 获取初始化的店铺的信息
+     * @return
+     */
     @RequestMapping(value = "/getshopinitinfo", method = RequestMethod.GET)
     @ResponseBody
     private Map<String, Object> getShopInitInfo() {
@@ -68,6 +72,11 @@ public class ShopManagementController {
     }
 
 
+    /**
+     * 注册店铺
+     * @param request
+     * @return
+     */
     @RequestMapping(value = "/registershop", method = RequestMethod.POST)
     @ResponseBody
     private Map<String, Object> registerShop(HttpServletRequest request) {
@@ -248,5 +257,64 @@ public class ShopManagementController {
 
     }
 
+
+    @RequestMapping(value = "/getshopmanagementinfo" ,method = RequestMethod.GET)
+    @ResponseBody
+    private Map<String,Object> getShopManagementInfo(HttpServletRequest request){
+        Map<String,Object> modelMap = new HashMap<>();
+        long shopId = HttpServletRequestUtil.getLong(request,"shopId");
+        if (shopId <= 0){
+            Object currentShopObj = request.getSession().getAttribute("currentShop");
+            if (currentShopObj == null){
+                modelMap.put("redirect",true);
+                modelMap.put("url","/shop/shoplist");
+            } else {
+                Shop currentShop = (Shop) currentShopObj;
+                modelMap.put("redirect",false);
+                modelMap.put("shopId",currentShop.getShopId());
+            }
+        } else {
+            Shop currentShop = new Shop();
+            currentShop.setShopId(shopId);
+            request.getSession().setAttribute("currentShop",currentShop);
+            modelMap.put("redirect",false);
+        }
+        return modelMap;
+    }
+
+    /**
+     * 获取店铺列表(根据具体的需要这个需要在ShopDao中完善查询出来的信息)
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "/shoplist", method = RequestMethod.GET)
+    @ResponseBody
+    private Map<String, Object> list(HttpServletRequest request) {
+        Map<String, Object> modelMap = new HashMap<>();
+        PersonInfo user =new PersonInfo();
+        request.getSession().setAttribute("user",user);
+        user = (PersonInfo) request.getSession()
+                .getAttribute("user");
+
+        user.setUserId(8L);
+        user.setName("若兰明月");
+        Long employeeId = user.getUserId();
+        List<Shop> shopList = new ArrayList<>();
+        try {
+            Shop shopCondation = new Shop();
+            shopCondation.setOwner(user);
+            //个人创建的店铺 比较少  这里不做分页
+            ShopExecution se = shopService.getShopList(shopCondation,0,100);
+            modelMap.put("shopList",se.getShopList());
+            modelMap.put("user",user);
+            modelMap.put("count",se.getCount());
+            modelMap.put("success",true);
+        }catch (Exception e){
+            modelMap.put("success",false);
+            modelMap.put("errMsg",e.getMessage());
+        }
+
+        return modelMap;
+    }
 
 }
