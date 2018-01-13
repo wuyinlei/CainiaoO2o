@@ -1,8 +1,8 @@
 $(function() {
     var shopId = 20;
     var listUrl = '/shopadmin/getproductcategorylist?shopId=' + shopId;
-    var addUrl = '/shop/addproductcategorys';
-    var deleteUrl = '/shop/removeproductcategory';
+    var addUrl = '/shopadmin/addproductcategorys';
+    var deleteUrl = '/shopadmin/removeproductcategory';
 
     $
         .getJSON(
