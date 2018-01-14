@@ -2,16 +2,15 @@ package com.ruolan.o2o.dao;
 
 import com.ruolan.o2o.BaseTest;
 import com.ruolan.o2o.entity.Product;
-import com.ruolan.o2o.entity.ProductImg;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
 
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ProductDaoTest  extends BaseTest{
 
 

@@ -8,6 +8,7 @@ import com.ruolan.o2o.enums.ProductCategoryStateEnum;
 import com.ruolan.o2o.service.ProductCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -34,6 +35,7 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
      * @throws RuntimeException
      */
     @Override
+    @Transactional
     public ProductCategoryExecution batchAddProductCategory(List<ProductCategory> productCategoryList) throws RuntimeException {
         if (productCategoryList != null && productCategoryList.size() > 0) {
             try {
@@ -66,6 +68,7 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
      * @throws RuntimeException
      */
     @Override
+    @Transactional
     public ProductCategoryExecution deleteProductCategory(long productCategoryId, long shopId) throws RuntimeException {
         try {
             int effectedNum = productDao

@@ -78,93 +78,89 @@
         pm.priority DESC
     </select>
 
+    <insert id="insertProduct" parameterType="com.ruolan.o2o.entity.Product"
+            useGeneratedKeys="true" keyProperty="productId" keyColumn="product_id">
+        INSERT INTO
+        tb_product(product_name,product_desc,img_addr,
+        normal_price,promotion_price,priority,create_time,
+        last_edit_time,enable_status,point,product_category_id,
+        shop_id)
+        VALUES
+        (#{productName},#{productDesc},#{imgAddr},
+        #{normalPrice},#{promotionPrice},#{priority},#{createTime},
+        #{lastEditTime},#{enableStatus},#{point},#{productCategory.productCategoryId},
+        #{shop.shopId})
+    </insert>
 
-    <!--<select id="queryListForEach" resultMap="com.ruolan.o2o.entity.Product">-->
+    <select id="queryProductList" resultMap="productMap">
+        SELECT
+        product_id,
+        product_name,
+        product_desc,
+        img_addr,
+        normal_price,
+        promotion_price,
+        priority,
+        create_time,
+        last_edit_time,
+        enable_status,
+        point,
+        product_category_id,
+        shop_id
+        FROM
+        tb_product
+        <where>
+            <if
+                    test="productCondition.shop!=null
+				 and productCondition.shop.shopId!=null">
+                and shop_id = #{productCondition.shop.shopId}
+            </if>
+            <if
+                    test="productCondition.productCategory!=null
+				 and productCondition.productCategory.productCategoryId!=null">
+                and product_category_id =
+                #{productCondition.productCategory.productCategoryId}
+            </if>
+            <!-- 写like语句的时候 一般都会写成 like '% %' 在mybatis里面写就是应该是 like '%${name} %' 而不是
+                '%#{name} %' ${name} 是不带单引号的，而#{name} 是带单引号的 -->
+            <if test="productCondition.productName!=null">
+                and product_name like '%${productCondition.productName}%'
+            </if>
+            <if test="productCondition.enableStatus!=null">
+                and enable_status = #{productCondition.enableStatus}
+            </if>
+        </where>
+        ORDER BY
+        priority DESC
+        LIMIT #{rowIndex},#{pageSize};
+    </select>
 
-        <!--SELECT * FROM tb_product-->
-        <!--<where>-->
-            <!--<if test="ids != null">-->
-                <!--&lt;!&ndash;-->
-                    <!--foreach:循环传入的集合参数-->
-                    <!--collection:传入的集合的变量名称-->
-                    <!--item:每次循环将循环出的数据放入到这个变量中-->
-                    <!--open:循环开始凭借的字符串-->
-                    <!--close:循环结束拼接的字符串-->
-                    <!--separator:循环中拼接的分隔符-->
-                <!--&ndash;&gt;-->
-                <!--<foreach collection="ids" item="id" open="id in (" close=")" separator=",">-->
-                    <!--#{id}-->
-                <!--</foreach>-->
+    <select id="queryProductCount" resultType="int">
+        SELECT count(1) FROM tb_product
+        <where>
+            <if
+                    test="productCondition.shop!=null
+				 and productCondition.shop.shopId!=null">
+                and shop_id = #{productCondition.shop.shopId}
+            </if>
+            <if
+                    test="productCondition.productCategory!=null
+				 and productCondition.productCategory.productCategoryId!=null">
+                and product_category_id =
+                #{productCondition.productCategory.productCategoryId}
+            </if>
+            <!-- 写like语句的时候 一般都会写成 like '% %' 在mybatis里面写就是应该是 like '%${name} %' 而不是
+                '%#{name} %' ${name} 是不带单引号的，而#{name} 是带单引号的 -->
+            <if test="productCondition.productName!=null">
+                and product_name like '%${productCondition.productName}%'
+            </if>
+            <if test="productCondition.enableStatus!=null">
+                and enable_status = #{productCondition.enableStatus}
+            </if>
+        </where>
+    </select>
 
-            <!--</if>-->
 
-
-        <!--</where>-->
-
-    <!--</select>-->
-
-
-    <!--一对一手动映射-->
-    <!--
-        id:resultMap的唯一标识
-        type:将查询出的数据放入这个指定的对象中
-        注意：手动映射需要将指定数据库表的字段名与java中pojo类的属性名称的对应关系
-    -->
-
-    <!--<resultMap id="productMapOne" type="com.ruolan.o2o.entity.Product">-->
-        <!--&lt;!&ndash;id：标签指定主键字段对应关系-->
-            <!--column:列,数据库中的字段名称-->
-            <!--property：属性,java中pojo的属性名称-->
-            <!--result:标签指定非主键字段的对应关系-->
-        <!--&ndash;&gt;-->
-        <!--<id column="product_id" property="productId" />-->
-        <!--<result column="product_name" property="productName" />-->
-        <!--<result column="product_desc" property="productDesc" />-->
-        <!--<result column="img_addr" property="imgAddr" />-->
-        <!--<result column="normal_price" property="normalPrice" />-->
-        <!--<result column="promotion_price" property="promotionPrice" />-->
-        <!--<result column="priority" property="priority" />-->
-        <!--<result column="create_time" property="createTime" />-->
-        <!--<result column="last_edit_time" property="lastEditTime" />-->
-        <!--<result column="enable_status" property="enableStatus" />-->
-        <!--<result column="point" property="point" />-->
-        <!--<association property="productCategory" column="product_category_id"-->
-                     <!--javaType="com.ruolan.o2o.entity.ProductCategory">-->
-            <!--<id column="product_category_id" property="productCategoryId" />-->
-            <!--<result column="product_category_name" property="productCategoryName" />-->
-            <!--<result column="product_category_desc" property="productCategoryDesc" />-->
-            <!--<result column="priority" property="priority" />-->
-            <!--<result column="create_time" property="createTime" />-->
-            <!--<result column="last_edit_time" property="lastEditTime" />-->
-        <!--</association>-->
-        <!--<association property="shop" column="shop_id"-->
-                     <!--javaType="com.ruolan.o2o.entity.Shop">-->
-            <!--<id column="shop_id" property="shopId" />-->
-            <!--<result column="owner_id" property="ownerId" />-->
-            <!--<result column="shop_name" property="shopName" />-->
-            <!--<result column="shop_desc" property="shopDesc" />-->
-            <!--<result column="shop_addr" property="shopAddr" />-->
-            <!--<result column="phone" property="phone" />-->
-            <!--<result column="shop_img" property="shopImg" />-->
-            <!--<result column="longitude" property="longitude" />-->
-            <!--<result column="latitude" property="latitude" />-->
-            <!--<result column="priority" property="priority" />-->
-            <!--<result column="create_time" property="createTime" />-->
-            <!--<result column="last_edit_time" property="lastEditTime" />-->
-            <!--<result column="enable_status" property="enableStatus" />-->
-            <!--<result column="advice" property="advice" />-->
-        <!--</association>-->
-        <!--<collection property="productImgList"-->
-                    <!--javaType="java.util.List"-->
-                    <!--ofType="com.ruolan.o2o.entity.ProductImg">-->
-            <!--<id column="product_img_id" property="productImgId" />-->
-            <!--<result column="img_addr" property="imgAddr" />-->
-            <!--<result column="img_desc" property="imgDesc" />-->
-            <!--<result column="priority" property="priority" />-->
-            <!--<result column="create_time" property="createTime" />-->
-            <!--<result column="product_id" property="productId" />-->
-        <!--</collection>-->
-    <!--</resultMap>-->
 
     <update id="updateProductCategoryToNull" parameterType="Long"
             keyProperty="product_id" useGeneratedKeys="true">
@@ -175,6 +171,35 @@
         #{productCategoryId}
     </update>
 
+    <update id="updateProduct" parameterType="com.ruolan.o2o.entity.Product"
+            keyProperty="product_id" useGeneratedKeys="true">
+        UPDATE tb_product
+        <set>
+            <if test="productName != null">product_name=#{productName},</if>
+            <if test="productDesc != null">product_desc=#{productDesc},</if>
+            <if test="imgAddr != null">img_addr=#{imgAddr},</if>
+            <if test="normalPrice != null">normal_price=#{normalPrice},</if>
+            <if test="promotionPrice != null">promotion_price=#{promotionPrice},</if>
+            <if test="priority != null">priority=#{priority},</if>
+            <if test="lastEditTime != null">last_edit_time=#{lastEditTime},</if>
+            <if test="enableStatus != null">enable_status=#{enableStatus},</if>
+            <if test="point != null">point=#{point},</if>
+            <if
+                    test="productCategory != null
+				 and productCategory.productCategoryId != null">
+                product_category_id=#{productCategory.productCategoryId}
+            </if>
+        </set>
+        WHERE product_id = #{productId}
+        AND shop_id=#{shop.shopId}
+    </update>
 
+    <delete id="deleteProduct">
+        DELETE FROM
+        tb_product
+        WHERE
+        product_id = #{productId}
+        AND shop_id=#{shopId}
+    </delete>
 
 </mapper>
