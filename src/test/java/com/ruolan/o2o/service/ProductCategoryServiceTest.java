@@ -15,7 +15,7 @@ public class ProductCategoryServiceTest extends BaseTest {
     @Test
     public void testQueryProductCategoryList(){
         long shopId = 20L;
-        List<ProductCategory> categoryList = service.getProductCategoryList(shopId);
+        List<ProductCategory> categoryList = service.getByShopId(shopId);
         System.out.println("个数是：" + categoryList.size());
 
     }

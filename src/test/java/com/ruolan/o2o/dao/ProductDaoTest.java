@@ -42,8 +42,8 @@ public class ProductDaoTest  extends BaseTest{
 //        effectedNum = productImgDao.deleteProductImgByProductId(productId);
 //        assertEquals(2, effectedNum);
 
-        List<Product> product = productDao.queryProductByProductId(4L);
-        System.out.println(product.get(0).getCreateTime());
+//        List<Product> product = productDao.(4L);
+//        System.out.println(product.get(0).getCreateTime());
 
     }
 

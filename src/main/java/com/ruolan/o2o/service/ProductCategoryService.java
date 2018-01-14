@@ -8,7 +8,14 @@ import java.util.List;
 
 public interface ProductCategoryService {
 
-    List<ProductCategory> getProductCategoryList(long shopId);
+    /**
+     * 查询指定某个店铺下的所有商品类别信息
+     *
+     * @param shopId shopId
+     * @return List<ProductCategory>
+     */
+    List<ProductCategory> getByShopId(long shopId);
+
 
     /**
      * @param productCategoryList

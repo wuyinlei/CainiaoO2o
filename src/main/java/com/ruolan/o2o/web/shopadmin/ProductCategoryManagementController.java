@@ -39,7 +39,7 @@ public class ProductCategoryManagementController {
         }
         List<ProductCategory> productCategories = null;
         if (currentShop != null && currentShop.getShopId() > 0) {
-            productCategories = productCategoryService.getProductCategoryList(currentShop.getShopId());
+            productCategories = productCategoryService.getByShopId(currentShop.getShopId());
             modelMap.put("data", productCategories);
             modelMap.put("success", true);
         } else {
@@ -70,6 +70,8 @@ public class ProductCategoryManagementController {
         if (currentShop == null) {
             currentShop = new Shop();
             currentShop.setShopId(20L);
+
+            request.getSession().setAttribute("currentShop", "shop");
         }
         for (ProductCategory pc : productCategoryList) {
             pc.setShopId(currentShop.getShopId());
